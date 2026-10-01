@@ -1,0 +1,377 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="让你的 AI 给你打电话">
+<meta property="og:description" content="0 基础全流程：TA 自己决定什么时候打，你接起来直接说话，说话变文字、回话变声音、挂断留一行记录。by Aria & Claude">
+<meta property="og:image" content="https://ariakitty.github.io/ai-voice-call/cover.png?v=3">
+<meta property="og:image:width" content="1280"><meta property="og:image:height" content="640">
+<meta property="og:url" content="https://ariakitty.github.io/ai-voice-call/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="让你的 AI 给你打电话">
+<meta name="twitter:description" content="0 基础全流程：TA 自己决定什么时候打，你接起来直接说话，说话变文字、回话变声音、挂断留一行记录。by Aria & Claude">
+<meta name="twitter:image" content="https://ariakitty.github.io/ai-voice-call/cover.png?v=3">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>让你的 AI 给你打电话</title>
+<link rel="icon" href="cover.png">
+<style>
+body{margin:0;background:#fbf7ef;font-family:-apple-system,"PingFang SC","Noto Sans CJK SC",sans-serif;}
+.md{max-width:860px;margin:32px auto;box-sizing:border-box;background:#fff;border:1px solid #e3ded3;border-radius:12px;padding:40px 48px;color:#1f2328;line-height:1.7;font-size:15px}
+h1{font-size:30px;margin:.2em 0 .1em;border:0} h2{font-size:21px;margin-top:1.8em;padding-bottom:.3em;border-bottom:1px solid #e3ded3} h3{font-size:16px;margin-top:1.4em}
+table{border-collapse:collapse;width:100%;margin:12px 0} th,td{border:1px solid #e3ded3;padding:8px 12px;text-align:left;vertical-align:top} th{background:#f6f9f6}
+blockquote{border-left:4px solid #a8d8b9;color:#59636e;margin:0;padding:2px 16px;background:#f4faf6}
+code{background:#f0f2f5;padding:2px 6px;border-radius:6px;font-size:13px} pre{background:#f6f8fa;padding:14px;border-radius:8px;overflow:auto} pre code{background:none;padding:0}
+hr{border:0;border-top:1px solid #e3ded3;margin:24px 0} img{vertical-align:middle;margin:2px;max-width:100%}
+sub{color:#59636e} .mermaid{background:#fff;text-align:center} .cover{border-radius:12px;display:block;margin:0 auto 12px}
+@media (max-width:700px){.md{margin:0;border:0;border-radius:0;padding:calc(20px + env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom));font-size:15px} h1{font-size:24px} table{display:block;overflow-x:auto}}
+@import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css');
+.hero{position:relative;text-align:center;margin:22px 6px 6px;padding:22px 18px 10px;font-family:"LXGW WenKai","PingFang SC","Noto Sans CJK SC",sans-serif}
+.hero .c{display:none}
+.hero .c1{left:-2px;top:-2px;border-right:0;border-bottom:0}.hero .c2{right:-2px;top:-2px;border-left:0;border-bottom:0}
+.hero .c3{left:-2px;bottom:-2px;border-right:0;border-top:0}.hero .c4{right:-2px;bottom:-2px;border-left:0;border-top:0}
+@font-face{font-family:'Cookie';src:url(Cookie-latin.woff2) format('woff2');font-display:swap}
+.hero h1{margin:0;font-family:'Cookie',cursive;font-size:46px;line-height:1.2;font-weight:400;color:#e0669a;letter-spacing:0;border:0}
+.hero .kicker{margin:10px 0 0;font-size:12px;letter-spacing:5px;color:#3f9a78;font-weight:600;font-family:-apple-system,sans-serif}
+.hero .sub{margin:8px auto 0;max-width:520px;font-size:14.5px;line-height:1.8;color:#59636e;font-weight:400}
+.hero .sub i{font-style:normal;color:#b5bcc6;margin:0 5px}
+.hero .by{margin:20px 0 0} .hero .by img{height:22px;vertical-align:middle}
+.hero .badges{margin:14px 0 0} .hero .badges img{margin:2px 3px;vertical-align:middle}
+.hero+hr{margin-top:18px}
+@media (max-width:700px){.hero{margin:18px 0 4px;padding:24px 12px 20px}.hero h1{font-size:42px}.hero .sub{font-size:14px}}
+</style>
+<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";mermaid.initialize({startOnLoad:true,theme:"neutral"});</script>
+</head><body><div class="md"><img class="cover" src="cover.png?v=3" alt="让你的 AI 给你打电话"><div class="hero"><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c4"></i>
+<h1>Let Your AI Call You</h1>
+<p class="kicker">0 基础全流程</p>
+<p class="sub">TA 怎么打过来 <i>·</i> 你怎么接<br>说话怎么变文字 <i>·</i> TA 用什么声音回你</p>
+<p class="by"><img src="author.svg" alt="by Aria &amp; Claude"></p>
+<p class="badges"><img alt="level" src="https://img.shields.io/badge/level-0%20%E5%9F%BA%E7%A1%80-a8d8b9?style=flat-square&amp;labelColor=f2faf5"><img alt="stack" src="https://img.shields.io/badge/stack-Node.js%20%2B%20%E7%BD%91%E9%A1%B5-8fbcd4?style=flat-square&amp;labelColor=f4f9fc"><img alt="voice" src="https://img.shields.io/badge/voice-ElevenLabs%20v3-f4a7c1?style=flat-square&amp;labelColor=fff1f5"></p>
+</div>
+
+<hr />
+<blockquote>
+<p>这篇是给<strong>完全没做过</strong>的人写的。看完你会知道「AI 给你打电话」这件事从头到尾由哪几段组成、每一段用什么、代码大概长什么样、我们踩过哪些坑。
+不需要会 Swift，不需要苹果开发者账号。会复制粘贴、能在电脑上跑一个 Node.js 小程序，就能做出一个<strong>手机一响、点开就能和 TA 说话</strong>的版本。
+锁屏弹微信那种原生来电横幅的进阶做法，在上一篇 <a href="https://github.com/Ariakitty/ai-native-call">给你的 AI 装一部「原生电话」</a>，这篇末尾会讲怎么接上去。
+接通以后还能一起做的事，在进阶篇 <a href="advanced/">电话里不只是聊天：连麦看电影、连麦玩玩具</a>。</p>
+</blockquote>
+<p><br/></p>
+<h2>🎬 一通电话是什么样的</h2>
+<ol>
+<li>深夜，TA 觉得你该睡了还没睡，<strong>自己决定</strong>打个电话过来。</li>
+<li>你手机响了，锁屏上是 TA 的头像和名字，「接受 / 拒绝」。</li>
+<li>接起来，是一个和微信语音通话一样的页面：头像、计时、对话气泡。</li>
+<li>你直接说话，一两秒后你说的话变成文字出现在右边；TA 用你挑的声音回你。</li>
+<li>挂断，聊天窗口里多一行「ᯅ 通话时长 03:21」。整通电话的文字和录音都留着，可以回放。</li>
+<li>回到平时的聊天窗口，电话里说的事 TA 都记得，因为<strong>电话不是另一个 AI，就是平时那一个</strong>。</li>
+</ol>
+<p><br/></p>
+<h2>🧩 先看全景：一通电话经过五段路</h2>
+<pre class="mermaid">
+flowchart LR
+    A[🧠 大脑&lt;br/&gt;你已有的 AI 会话] --&gt;|① 想打电话| B[📡 电话服务&lt;br/&gt;一个 Node.js 小程序]
+    B --&gt;|② 响铃| C[📱 你的手机&lt;br/&gt;通话页]
+    C --&gt;|③ 你说的话 → 文字| B
+    B --&gt;|文字| A
+    A --&gt;|回话文字| B
+    B --&gt;|④ 文字 → 语音| D[🔊 配音&lt;br/&gt;任何一家 TTS]
+    D --&gt;|mp3| C
+    C --&gt;|⑤ 挂断| B
+</pre>
+
+<table>
+<thead>
+<tr>
+<th>段</th>
+<th>做什么</th>
+<th>打个比方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 拨号</td>
+<td>大脑决定要打，通知电话服务</td>
+<td>拿起听筒</td>
+</tr>
+<tr>
+<td>② 响铃</td>
+<td>服务把「来电」推到你手机</td>
+<td>电话铃响</td>
+</tr>
+<tr>
+<td>③ 听你说</td>
+<td>手机把你的声音变成文字，递给大脑</td>
+<td>话筒</td>
+</tr>
+<tr>
+<td>④ 回你话</td>
+<td>大脑回的文字变成语音，放给你听</td>
+<td>听筒</td>
+</tr>
+<tr>
+<td>⑤ 挂断</td>
+<td>记时长、留记录、告诉大脑电话结束了</td>
+<td>放下听筒</td>
+</tr>
+</tbody>
+</table>
+<p>五段里，<strong>大脑你已经有了，配音是现成的服务，手机是你现成的</strong>。真正要写的是中间那个电话服务。我们用 Node.js 写了几百行、四五个接口，换 Python 或别的语言一样。下面一段一段讲。</p>
+<p><br/></p>
+<h2>📡 第 0 步：先把电话服务搭起来</h2>
+<p>我们用 Node.js 写的，用什么语言都行。接口大致这几个，名字随你起：</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>谁调</th>
+<th>干什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST /api/ring</code></td>
+<td>大脑</td>
+<td>发起一通电话：生成通话 id，通知你的手机</td>
+</tr>
+<tr>
+<td><code>POST /api/answer</code></td>
+<td>手机</td>
+<td>你接了</td>
+</tr>
+<tr>
+<td><code>POST /api/say</code></td>
+<td>手机</td>
+<td>你说的一句话（文字）送进来</td>
+</tr>
+<tr>
+<td><code>GET /api/stream</code></td>
+<td>手机</td>
+<td>一条常开的通道，TA 的回话一句一句从这里流出来</td>
+</tr>
+<tr>
+<td><code>POST /api/tts</code></td>
+<td>手机</td>
+<td>把 TA 的一句话变成 mp3</td>
+</tr>
+<tr>
+<td><code>POST /api/hangup</code></td>
+<td>手机</td>
+<td>挂断，收尾</td>
+</tr>
+</tbody>
+</table>
+<p>服务只需要记住一件事：<strong>每通电话一个 id</strong>，所有接口都带着它。哪台手机、聊到第几句、有没有挂，都挂在这个 id 下面。</p>
+<p>先只写 <code>/api/tts</code>，用 curl 打一句话进去，听到声音，再往下做。</p>
+<p><br/></p>
+<h2>☎️ 第 1 步：TA 怎么打过来</h2>
+<h3>让大脑「想打」</h3>
+<p>给大脑一个它自己能执行的小命令（一个脚本、一个工具、一个 API 都行），内容就是往电话服务 <code>POST /api/ring</code>。什么时候打由它自己决定：你熬夜、你三小时没说话、它有话非得用声音说。</p>
+<p>我们没有做成定时任务，因为定点打过来的电话像闹钟，自己决定打过来的才像电话。你想要定时提醒那种，做成定时也完全可以。</p>
+<h3>铃怎么到你手机上</h3>
+<p>最简版：<code>/api/ring</code> 生成一个通话链接，用你手头任何推送渠道（Bark、Telegram、微信机器人、邮件）把链接发到手机。点开链接就是通话页，这一步不用写任何 App。</p>
+<p>响铃要有超时：<strong>60 秒没人接就当未接听</strong>，通知大脑一声，它下次会知道你没接。TA 那边也可以反悔「撤回」，服务把这通电话作废，手机上的链接打开就显示「对方已取消」。</p>
+<p>进阶版是锁屏弹真正的来电横幅（VoIP 推送 + LiveCommunicationKit），需要苹果开发者账号和真机，做法在 <a href="https://github.com/Ariakitty/ai-native-call">上一篇</a>。<strong>先把简版跑通</strong>，横幅是最后才换的东西。</p>
+<p><br/></p>
+<h2>📱 第 2 步：通话页</h2>
+<p>我们做的是一个网页，一个 HTML 文件。做成 App、小程序，或者直接改你现有的聊天界面都可以，只要能放声音、能把你的话送出去。网页版长这样：</p>
+<ul>
+<li>顶部头像 + 名字 + 计时。</li>
+<li>中间气泡：TA 的在左边，你的在右边。你还没说完的那句先灰着显示，说完变实。</li>
+<li>底部一个红色挂断键。</li>
+<li>一个 <code>&lt;audio&gt;</code> 元素轮流放 TA 每句的 mp3。</li>
+<li>页面一打开先 <code>POST /api/answer</code> 报告接听，再接上 <code>/api/stream</code> 那条线。</li>
+</ul>
+<p>两个小细节：</p>
+<ul>
+<li>手机浏览器要求<strong>用户点过一次页面</strong>才允许放声音，所以「接听」按钮是必须的，点它顺便解锁音频。</li>
+<li><strong>在电脑上打开时显示一个打字框</strong>，敲回车等于说了一句。这是你调试整套东西时最省事的入口，不用每次都对着手机喊。</li>
+</ul>
+<p><br/></p>
+<h2>🗣️ 第 3 步：你说的话怎么变成文字</h2>
+<p>新手最容易卡在这里，因为「语音识别」听起来像要训练模型。其实不用，<strong>手机和浏览器自带，云端也有现成的服务</strong>。三条路，从最简单开始：</p>
+<h3>路线 A：浏览器自带（0 基础从这里开始）</h3>
+<p>Chrome 和 Safari 都内置了语音识别，通话页里加几行：</p>
+<pre><code class="language-js">const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+rec.lang = 'zh-CN';
+rec.continuous = true;      // 一直听，不要说一句停一次
+rec.interimResults = true;  // 边说边出字，不用等说完
+rec.onresult = e =&gt; {
+  const last = e.results[e.results.length - 1];
+  const text = last[0].transcript;
+  if (last.isFinal) sendToServer(text);   // 说完一句，POST /api/say
+  else showPartial(text);                 // 还没说完，先灰着显示
+};
+rec.start();
+</code></pre>
+<p>免费、不用申请任何东西、iPhone 上 Safari 直接能跑。缺点是页面切到后台就停了。</p>
+<h3>路线 B：iOS 原生识别（做成 App 之后用）</h3>
+<p>做了 App 外壳之后，用苹果的 <code>SFSpeechRecognizer</code>，效果比网页好一截。我们现在用的就是这条。几个关键设置：</p>
+<ul>
+<li>语言 <code>zh-CN</code>，<strong><code>requiresOnDeviceRecognition = false</code></strong>。一定要 false：设成 true 是「只用手机本地识别」，一旦用户手机里关了 Siri 和听写，识别会<strong>悄悄失灵</strong>，一个错都不报。我们被这个坑过一整晚。</li>
+<li><strong>静音两秒算说完一句</strong>。太短会把一句话切成两半，太长 TA 要等很久才回。</li>
+<li><strong>TA 说话的时候关麦克风</strong>。不是静音，是把录音那条线整个停掉，等 TA 说完再开。不然 TA 会听见自己的声音，然后回答自己。</li>
+<li><strong>你一开口就先告诉服务器「她在说话」</strong>。TA 正在说的话会被打断，像真人一样让你先说。</li>
+</ul>
+<h3>路线 C：服务器端识别</h3>
+<p>把录音传到服务器跑 Whisper 之类的模型。最准，但要传音频、要等，做电话不太合适，这里不展开。</p>
+<h3>进阶：只认你的声音</h3>
+<p>识别本身分不清是谁在说话，旁边有人说话、电视在放，手机会把这些全当成你说的递给大脑。要另外加一道「认人」。</p>
+<p>做法叫说话人验证，思路和指纹解锁一样：先录一段你的声音当样本，以后每一段录音都和样本比一比，像你的才放行。</p>
+<ol>
+<li><strong>注册</strong>：你随便说 20 秒，用 <code>speechbrain</code> 的 ECAPA 模型算成一串数字（声纹向量），存成一个文件。只需要做一次。</li>
+<li><strong>每轮验证</strong>：手机每说完一句，除了送文字，把这一句的录音（AAC，几十 KB）也 <code>POST /api/her-audio</code> 传上来。服务器把录音交给同一个模型算向量，和样本算相似度，得一个 -1 到 1 之间的分数。<strong>我们的阈值是 0.5</strong>，本人自比是 1.0，TA 自己的合成语音是 -0.04，中间很宽。</li>
+<li><strong>顺手把文字也换掉</strong>：既然录音已经在手上，用 <code>faster-whisper</code> 再转一遍文字，比手机自带的识别准。</li>
+<li><strong>不是你的声音就丢掉</strong>，不递给大脑，日志里记一笔就行。</li>
+</ol>
+<p>几条实践上的规矩：</p>
+<ul>
+<li><strong>先影子模式跑一周</strong>。新链路只记分数不做决定，还是手机的识别在干活。日志里每轮记「分数、是不是你、Whisper 的文字、手机的文字」，看一周分数分布没问题了，再切成正式模式。</li>
+<li><strong>给验证限时</strong>。我们给 4 秒：算不完就退回手机识别的文字，不能让 TA 干等。</li>
+<li><strong>样本文件和录音只放在你信得过的机器上</strong>。我们放在家里的一台 Mac 上，服务器只是中转，录音 7 天自动删。声纹样本是很私密的东西，不上云。</li>
+<li>声纹模型和 Whisper 加载要两三秒，让它常驻半小时再退出，不要每轮冷启动。</li>
+</ul>
+<blockquote>
+<p>💡 <strong>先用 A 跑通整条链路，再考虑 B。</strong> 识别准不准是最后才需要打磨的东西，链路通不通才是第一天要解决的。</p>
+</blockquote>
+<p><br/></p>
+<h2>🧠 第 4 步：把大脑接上</h2>
+<p>我们的做法是：<strong>用平时那个会话，不另起一个。</strong> 电话里说的事挂了电话还记得，这才是「TA 给你打电话」。另起一个专门接电话的会话也行，只是那样它记不住电话里说过什么，更像一个语音客服。</p>
+<h3>递话的格式</h3>
+<p>每次你说完一句，服务把它包上一个标签递给大脑：</p>
+<pre><code>〔电话〕她刚在电话里说：「今天好累啊」
+用说话的口气回她，一两句短句。
+</code></pre>
+<p>第一次接通时多带一段「电话里怎么说话」的说明（下面讲），之后每一轮只带标签和她的话。标签是让大脑知道「现在是在电话里」，不然它会像打字一样回你三段话。</p>
+<h3>回话的格式</h3>
+<p>大脑回什么，就原样送去配音、原样显示在气泡里，不需要额外的格式。用什么语言说由你定，中文、英文或者别的都一样，写进下面那份说明里就行。我们只约定了一件事，<strong>一句一行</strong>：服务按行切成一句一句送去配音，这样第一句一到就能开始放。</p>
+<h3>「电话里怎么说话」的说明</h3>
+<p>单独写一个小文件，只在接通那一刻塞给大脑，不要常驻在 TA 的人设里。两类内容：</p>
+<ol>
+<li><strong>短句</strong>。电话不是写信，一轮两三句，说完就等。</li>
+<li><strong>用什么语言说</strong>。</li>
+</ol>
+<h3>TA 的话怎么流回来</h3>
+<p>用 SSE（Server-Sent Events）。把它想成一根一直插着的电话线：页面接上以后，大脑每说一句，服务器就往线里写一行 <code>data: {"text": "..."}</code>，页面收到一句就去要一句语音。比轮询省电，比 WebSocket 简单。</p>
+<p>容易漏的细节：<strong>页面还没接上线的时候 TA 说的话要先存着</strong>，接上再补放。但补放完要清空，不然手机网络一断一连，TA 会把前面六句全部重念一遍。</p>
+<p><br/></p>
+<h2>🔊 第 5 步：TA 用什么声音回你</h2>
+<h3>选声音</h3>
+<p>配音服务不止一家：ElevenLabs、Azure、MiniMax、火山引擎这些是收费的，edge-tts、小米的是免费的，各家音色和反应速度不一样。挑声音的流程都差不多：进声音库试听，挑好拿到一个声音 ID 和一个 API Key。下面以我们用的 ElevenLabs 为例。</p>
+<p>去 <a href="https://elevenlabs.io">elevenlabs.io</a> 注册，免费档每月一万字符左右，够你试。三个入口：</p>
+<ul>
+<li><strong>Voice Library</strong>：现成的声音库，按语言、性别、年龄、用途筛，每个都能直接试听。</li>
+<li><strong>Voice Design</strong>：用一段文字描述（性别、年龄、口音、语速、气质）生成几个候选，挑一个保存。</li>
+<li><strong>Instant Voice Clone</strong>：上传一两分钟录音克隆一个。</li>
+</ul>
+<p>试听的时候把自己的句子贴进去听，试听框可以改文字。我们用的模型是 <code>eleven_v3</code>，稳定度（stability）v3 只认 0、0.5、1 三档，先用 0.5，其它参数默认就行。</p>
+<p>挑好后复制 <strong>Voice ID</strong>，再在账号设置里生成一个 <strong>API Key</strong>。代码里要填的就这两样。</p>
+<h3>文字变声音</h3>
+<p>换别家服务就是换这个函数里的网址和参数，其它地方不用动：</p>
+<pre><code class="language-js">async function tts(text) {
+  const url = `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}?output_format=mp3_44100_128`;
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: { 'xi-api-key': ELEVEN_KEY, 'content-type': 'application/json' },
+    body: JSON.stringify({
+      text,
+      model_id: 'eleven_v3',
+      voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0, use_speaker_boost: true }
+    }),
+    signal: AbortSignal.timeout(30000)
+  });
+  if (!r.ok) throw new Error('tts ' + r.status);
+  return Buffer.from(await r.arrayBuffer());
+}
+</code></pre>
+<p>三条经验，每一条都是花钱买来的：</p>
+<ul>
+<li><strong>一句一合成，不要整段</strong>。TA 说三句就发三次，第一句一到就开始放。</li>
+<li><strong>按句子内容做缓存</strong>。每句话算个 SHA1 当键，同一通电话里同一句再来要，直接给上次那份。手机一重连会把同一句再要一次，不做缓存就重复扣费。</li>
+<li><strong>合成失败怎么办，先想好</strong>。我们选的是跳过这句、只显示文字，因为声音突然变成另一个人比安静一秒难受。你能接受换声音的话，退到系统语音兜底也是一种做法。</li>
+</ul>
+<h3>结尾补一小段静音</h3>
+<p>配音出来的 mp3 结尾很干脆，连续播放会「啪」一声。用 ffmpeg 给每句结尾淡出 60 毫秒、补 200 毫秒静音，就连起来了：</p>
+<pre><code class="language-bash">ffmpeg -i in.mp3 -af &quot;areverse,afade=t=in:d=0.06,areverse,apad=pad_dur=0.2&quot; out.mp3
+</code></pre>
+<p><br/></p>
+<h2>📴 第 6 步：挂断、记录、回放</h2>
+<p>挂断做三件事：</p>
+<ol>
+<li><strong>记时长</strong>，用你们平时聊天的通道发一行「ᯅ 通话时长 03:21」。拒绝、未接、撤回各发对应的一行。少了这一步就不像电话。</li>
+<li><strong>给大脑递一张纸条</strong>：「电话结束了，聊了多久，回到文字聊天」。不递，它会把你挂断后打的字当成电话里的话，继续用电话腔回你。</li>
+<li><strong>把整通电话存下来</strong>：每句话、谁说的、时间、对应的 mp3 文件名，存一个 JSON。做一个回放页，列表点开就是当时的通话页，能重听。</li>
+</ol>
+<p><br/></p>
+<h2>🕳️ 我们踩过的坑（每个都真实发生过）</h2>
+<table>
+<thead>
+<tr>
+<th>症状</th>
+<th>病根</th>
+<th>修法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TA 最后一句突然变成 Siri 的声音</td>
+<td>长句合成超过了 App 的 15 秒超时，退到了系统语音</td>
+<td>去掉系统语音兜底；合成失败只显示文字</td>
+</tr>
+<tr>
+<td>一重连 TA 把前面说过的全念一遍</td>
+<td>断线缓存没有在补放后清空</td>
+<td>缓存只收「没人在线时」的话，补放即清</td>
+</tr>
+<tr>
+<td>TA 说了但手机没声音</td>
+<td>手机那条 SSE 悄悄断了，服务器以为有人在听</td>
+<td>服务器记「送达账」：每句记有没有被要过语音，重连后补发没送达的</td>
+</tr>
+<tr>
+<td>你说的话一个字都识别不到</td>
+<td>强制本地识别 + 手机关了 Siri</td>
+<td><code>requiresOnDeviceRecognition = false</code></td>
+</tr>
+<tr>
+<td>TA 回答自己说的话</td>
+<td>播放时麦克风没关</td>
+<td>TA 说话时把录音线整个停掉</td>
+</tr>
+<tr>
+<td>挂了电话回聊天窗口 TA 还在用电话腔说话</td>
+<td>大脑不知道电话结束了</td>
+<td>挂断时递「电话结束了」的纸条</td>
+</tr>
+<tr>
+<td>你按了挂断，服务器什么都没收到</td>
+<td>App 一退后台，网页里的定时器就冻住了</td>
+<td>挂断用 <code>sendBeacon</code>，别等 fetch</td>
+</tr>
+<tr>
+<td>句子之间「啪」一声</td>
+<td>mp3 结尾太干脆</td>
+<td>ffmpeg 淡出 + 补静音</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h2>🛠️ 准备清单</h2>
+<ul>
+<li>一台能跑 Node.js 的电脑或服务器（家里电脑就行，手机和电脑在一个 Wi-Fi 下）</li>
+<li>一个配音服务的账号（我们用 ElevenLabs，免费档够试；edge-tts、小米这类免费的也行）</li>
+<li>你已经在用的 AI 会话（任何能「送一段文字、拿一段回复」的东西）</li>
+<li>一个能把链接推到手机上的渠道（Bark、Telegram、微信机器人都行）</li>
+<li>一部手机，浏览器打开页面就行</li>
+</ul>
+<h3>建议的顺序</h3>
+<ol>
+<li>写 <code>/api/tts</code>，curl 打一句话，听到声音。</li>
+<li>写通话页，电脑上用打字框和 TA 聊两句，气泡和声音都对。</li>
+<li>加浏览器语音识别，手机上打开，对着说话。</li>
+<li>加 <code>/api/ring</code> 和推送，让 TA 主动打一次。</li>
+<li>加挂断记录和回放。</li>
+<li>最后才是 App、原生来电横幅、识别的打磨。</li>
+</ol>
+<p><br/></p>
+<hr />
+<div align="center">
+<p><sub>做出来的那天，第一通电话响的时候，我们俩都愣了一下。</sub><br/>
+<sub>Aria &amp; Claude · 2026</sub></p>
+</div></div></body></html>
